@@ -49,16 +49,17 @@
             <input type="hidden" name="action" value="ADD">
             <input type="submit" value="Ajouter">
 	</form>
-        $(table)
+        
         <table><div class="table">
 			<div class="thead"><div class="td">Code</div><div class="td">Taux</div><div class="td">Action</div></div>
 			<div class="tbody">
                             
-                            <c:set var="listDiscountCode" value="$(table)"/>
-                            <c:forEach var="entry" items="$listDiscountCode">
+                            
+                            <c:set var="listDiscountCode" value="${table}"/>
+                            <c:forEach var="entry" items="${listDiscountCode}">
 				<form class="tr" method="get">
-					<div class="td"><input type="text" name="code" value=$(entry.getCode) readonly/></div>
-					<div class="td"><input name="taux" type="number" step="0.01" min="0.0" max="99.99" size="5" value=$(entry.getRate)/></div>
+					<div class="td"><input type="text" name="code" value=${entry.getCode} readonly/></div>
+					<div class="td"><input name="taux" type="number" step="0.01" min="0.0" max="99.99" size="5" value=${entry.getRate}/></div>
 					<div class="td"><input type="submit" name="action" value="DELETE"/></div>
 				</form>	  		    
                             </c:forEach>
