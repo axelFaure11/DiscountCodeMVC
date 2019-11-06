@@ -45,7 +45,7 @@
         <h1>Edition des taux de remise</h1>
         <form method='GET'>
             Code : <input name="code" size="1" maxlength="1" pattern="[A-Z]{1}+" title="Une lettre en MAJUSCULES"><br/>
-            Taux : <input name="taux" type="number" step="0.01" min="0.0" max="99.99" size="5"><br/>
+            Taux : <input name="rate" type="number" step="0.01" min="0.0" max="99.99" size="5"><br/>
             <input type="hidden" name="action" value="ADD">
             <input type="submit" value="Ajouter">
 	</form>
@@ -53,13 +53,11 @@
         <table><div class="table">
 			<div class="thead"><div class="td">Code</div><div class="td">Taux</div><div class="td">Action</div></div>
 			<div class="tbody">
-                            
-                            
-                            <c:set var="listDiscountCode" value="${table}"/>
+                            <c:set var="listDiscountCode" value="${discount_code_table}"/>
                             <c:forEach var="entry" items="${listDiscountCode}">
 				<form class="tr" method="get">
-					<div class="td"><input type="text" name="code" value=${entry.getCode} readonly/></div>
-					<div class="td"><input name="taux" type="number" step="0.01" min="0.0" max="99.99" size="5" value=${entry.getRate}/></div>
+					<div class="td"><input type="text" name="code" value="${entry.code}" readonly/></div>
+					<div class="td"><input name="rate" type="number" step="0.01" min="0.0" max="99.99" size="5" value="${entry.rate}"/></div>
 					<div class="td"><input type="submit" name="action" value="DELETE"/></div>
 				</form>	  		    
                             </c:forEach>

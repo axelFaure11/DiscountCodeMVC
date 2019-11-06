@@ -8,6 +8,7 @@ package com.mycompany.discountcodemvc.Servlets;
 import main.DAODiscount_Code;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import main.DAODiscount_Code;
 import main.DataSourceFactory;
+import main.DiscountCode;
 
 /**
  *
@@ -41,22 +43,27 @@ public class Controller extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String code = request.getParameter("discount_code");
             String rate = request.getParameter("rate");
+            String action = request.getParameter("action");
             DAODiscount_Code daodc = new DAODiscount_Code(DataSourceFactory.getDataSource());
-            request.setAttribute("table", daodc.getDiscountCodeList());
             if(code == null){
                 request.setAttribute("errorName", "Paramètre code non renseigné");
-                request.getRequestDispatcher("/WEB-INF/erreurName.jsp");
             }
             else if(rate == null){
                 request.setAttribute("errorRate", "Paramètre taux non renseigné");
-                 request.getRequestDispatcher("/WEB-INF/erreurRate.jsp");
             }
             else if(code.length()>1){
                 request.setAttribute("nameTooLong", "Le nom de code est un caractère");
-                request.getRequestDispatcher("/WEB-INF/affichageTable.jsp");
-            } else {
-                request.getRequestDispatcher("/WEB-INF/affichageTable.jsp");
             }
+            if(action.equals("ADD") && code != null && rate != null){
+                DiscountCode dc = new DiscountCode(code, Float.parseFloat(rate));
+                daodc.addNewDiscountCode(dc);
+            }
+            if(action.equals("DELETE")){
+                daodc.deleteDiscountCode(code);
+            }
+            request.setAttribute("discount_code_table", daodc.getDiscountCodeList());
+            System.out.println(daodc.getDiscountCodeList());
+            request.getRequestDispatcher("/affichageTable.jsp").include(request, response);
         }
     }
 

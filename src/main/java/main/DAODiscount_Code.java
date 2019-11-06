@@ -54,8 +54,8 @@ public class DAODiscount_Code {
             PreparedStatement pStmt = connexion.prepareStatement(sql)){
             pStmt.setString(1, dc.getCode());
             pStmt.setFloat(2, dc.getRate());
-            
-            if(pStmt.executeUpdate()==0){
+            int updt = pStmt.executeUpdate();
+            if(updt==0){
                 throw new SQLException();
             }
             
@@ -65,13 +65,13 @@ public class DAODiscount_Code {
         }
     }
     
-    public void deleteDiscountCode(DiscountCode dc) throws SQLException{
-        String sql = "DELETE FROM DISCOUNT_CODE WHERE 'DISCOUNT_CODE' = (?)";
+    public void deleteDiscountCode(String dc) throws SQLException{
+        String sql = "DELETE FROM DISCOUNT_CODE WHERE Discount_code = ?";
         try(Connection connexion = myDataSource.getConnection();
             PreparedStatement pStmt = connexion.prepareStatement(sql)){
-            pStmt.setString(1, dc.getCode());
-            
-            if(pStmt.executeUpdate()==0){
+            pStmt.setString(1, dc);
+            int updt = pStmt.executeUpdate();
+            if(updt==0){
                 throw new SQLException();
             }
         }
